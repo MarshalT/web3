@@ -164,6 +164,11 @@ const App = () => {
                 key: '5',
                 label: '代币兑换',
                 children: <Swap web3={web3} account={account} />
+              },
+              {
+                key: '6',
+                label: '代币兑换',
+                children: <Swap web3={web3} account={account} />
               }
             ]} />
           </Space>
