@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Button, message, Space, Typography, Tabs } from 'antd'
-import { WalletOutlined } from '@ant-design/icons'
+import { WalletOutlined, GithubOutlined } from '@ant-design/icons'
 import Web3 from 'web3'
 import BatchTransfer from './components/BatchTransfer'
 import TransactionHistory from './components/TransactionHistory'
@@ -9,7 +9,7 @@ import BlockExplorer from './components/BlockExplorer'
 import Swap from './components/Swap'
 
 const { Header, Content } = Layout
-const { Title } = Typography
+const { Title, Text, Link } = Typography
 
 const App = () => {
   const [web3, setWeb3] = useState(null)
@@ -107,12 +107,41 @@ const App = () => {
   };
   
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px' }}>
+    <Layout style={{ minHeight: '100vh', paddingBottom: '50px' }}>
+      <Header style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between', 
+        padding: '0 24px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        width: '100%'
+      }}>
         <Title level={4} style={{ color: '#fff', margin: 0 }}>Web3工具箱</Title>
         <Space>
           {account ? (
             <>
+              <div 
+                style={{ 
+                  backgroundColor: 'rgba(24, 144, 255, 0.2)', 
+                  padding: '4px 12px', 
+                  borderRadius: '16px', 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  border: '1px solid rgba(24, 144, 255, 0.5)'
+                }}
+              >
+                <Text 
+                  style={{ 
+                    color: '#fff', 
+                    margin: 0,
+                    fontWeight: 'bold'
+                  }}
+                >
+                  {parseFloat(balance).toFixed(4)} ETH
+                </Text>
+              </div>
               <Button
                 type="primary"
                 icon={<WalletOutlined />}
@@ -140,40 +169,59 @@ const App = () => {
       <Content style={{ padding: '24px', background: '#fff' }}>
         {account && (
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            <Typography.Text strong>当前账户余额: {parseFloat(balance).toFixed(4)} ETH</Typography.Text>
             <Tabs defaultActiveKey="1" items={[
               { key: '1',
-                label: '地址生成',
+                label: 'EVM地址生成',
                 children: <AddressGenerator />              
               },
-              { key: '2',
-                label: '批量转账',
-                children: <BatchTransfer web3={web3} account={account} />             
-              },
-              {
-                key: '3',
-                label: '交易记录',
-                children: <TransactionHistory web3={web3} />
-              },
-              {
-                key: '4',
-                label: '区块查询',
-                children: <BlockExplorer web3={web3} />
-              },
-              {
-                key: '5',
-                label: '代币兑换',
-                children: <Swap web3={web3} account={account} />
-              },
-              {
-                key: '6',
-                label: '代币兑换',
-                children: <Swap web3={web3} account={account} />
-              }
+              // { key: '2',
+              //   label: '批量转账',
+              //   children: <BatchTransfer web3={web3} account={account} />             
+              // },
+              // {
+              //   key: '3',
+              //   label: '交易记录',
+              //   children: <TransactionHistory web3={web3} />
+              // },
+              // {
+              //   key: '4',
+              //   label: '区块查询',
+              //   children: <BlockExplorer web3={web3} />
+              // },
+              // {
+              //   key: '5',
+              //   label: '代币兑换',
+              //   children: <Swap web3={web3} account={account} />
+              // }
             ]} />
           </Space>
         )}
       </Content>
+      
+      {/* 使用固定定位的页脚，不使用 Ant Design 的 Footer 组件 */}
+      <div style={{ 
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        background: '#f0f2f5',
+        textAlign: 'center',
+        padding: '12px 50px',
+        borderTop: '1px solid #e8e8e8',
+        zIndex: 10
+      }}>
+        <Text>Web3工具箱 ©2025 Created by Marshal</Text>
+        <span style={{ margin: '0 8px' }}>|</span>
+        <a 
+          href="https://github.com/MarshalT/web3" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ color: 'rgba(0, 0, 0, 0.65)' }}
+        >
+          <GithubOutlined style={{ fontSize: '16px', marginRight: '4px' }} />
+          <span>GitHub 仓库</span>
+        </a>
+      </div>
     </Layout>
   )
 }
