@@ -438,21 +438,22 @@ const App = () => {
               <Tabs 
                 defaultActiveKey="1" 
                 items={[
-                  {
+                   {
                     key: '1',
-                    label: '批量转账',
-                    children: <BatchTransfer web3={web3} account={account} />
+                    label: 'EVM地址生成',
+                    children: <AddressGenerator web3={web3} />
                   },
                   // {
                   //   key: '2',
-                  //   label: '交易记录',
-                  //   children: <TransactionHistory web3={web3} account={account} />
+                  //   label: '批量转账',
+                  //   children: <BatchTransfer web3={web3} account={account} />
                   // },
                   // {
                   //   key: '3',
-                  //   label: '地址生成',
-                  //   children: <AddressGenerator web3={web3} />
+                  //   label: '交易记录',
+                  //   children: <TransactionHistory web3={web3} account={account} />
                   // },
+               
                   // {
                   //   key: '4',
                   //   label: '区块查询',
@@ -655,7 +656,7 @@ const App = () => {
         boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.05)',
         height: '50px' // 固定Footer高度
       }}>
-        <Text>Web3工具箱 ©2023 Created by MarshalT</Text>
+        <Text>Web3工具箱 ©2025 Created by MarshalT</Text>
         <span style={{ margin: '0 8px' }}>|</span>
         <a 
           href="https://github.com/MarshalT/web3" 
