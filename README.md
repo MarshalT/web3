@@ -68,12 +68,109 @@ npm run build
 npm run preview
 ```
 
-## 部署
+## GitHub Pages部署指南
 
-项目使用GitHub Pages进行部署，可以通过以下命令部署：
+### 1. 前期准备
 
-```bash
-npm run deploy
+1. 确保你的GitHub仓库已经创建并初始化
+2. 确保本地代码已经推送到GitHub仓库
+3. 检查package.json中是否包含正确的homepage字段：
+   ```json
+   {
+     "homepage": "https://[你的GitHub用户名].github.io/[仓库名]"
+   }
+   ```
+
+### 2. 配置部署脚本
+
+1. 安装gh-pages包（如果尚未安装）：
+   ```bash
+   npm install gh-pages --save-dev
+   ```
+
+2. 在package.json中添加部署脚本：
+   ```json
+   {
+     "scripts": {
+       "predeploy": "npm run build",
+       "deploy": "gh-pages -d dist"
+     }
+   }
+   ```
+
+### 3. Vite配置调整
+
+1. 在vite.config.js中添加base配置：
+   ```javascript
+   export default defineConfig({
+     base: '/[仓库名]/',
+     // ... 其他配置
+   })
+   ```
+
+### 4. 部署步骤
+
+1. 确保所有代码更改已提交到Git：
+   ```bash
+   git add .
+   git commit -m "准备部署到GitHub Pages"
+   git push origin main
+   ```
+
+2. 运行部署命令：
+   ```bash
+   npm run deploy
+   ```
+
+3. 部署完成后，等待几分钟，然后访问：
+   ```
+   https://[你的GitHub用户名].github.io/[仓库名]
+   ```
+
+### 5. 故障排除
+
+- 如果部署后页面显示404：
+  - 检查GitHub仓库设置中的Pages设置是否正确
+  - 确认gh-pages分支是否已创建并设置为部署源
+  - 验证vite.config.js中的base配置是否正确
+
+- 如果资源加载失败：
+  - 检查vite.config.js中的base配置
+  - 确保所有资源路径使用相对路径
+
+- 如果部署命令失败：
+  - 确保有正确的GitHub访问权限
+  - 检查是否正确配置了Git凭据
+
+### 6. 自动化部署（可选）
+
+可以配置GitHub Actions实现自动部署：
+
+1. 在仓库中创建`.github/workflows/deploy.yml`文件：
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install Dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: dist
 ```
 
 ## 浏览器钱包要求
